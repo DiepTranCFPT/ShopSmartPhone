@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Category</title>
+</head>
+<body>
+<!-- Kiểm tra quyền admin bằng session.user -->
+<div th:if="${session.user == null or !#lists.contains(session.user.roles.?[name=='ADMIN'], 'ADMIN')}">
+    <div class="alert alert-danger mt-4">Bạn không có quyền truy cập trang này.</div>
+</div>
+<div th:if="${session.user != null and #lists.contains(session.user.roles.?[name=='ADMIN'], 'ADMIN')}">
+<h1>Edit Category</h1>
+<form th:action="@{/admin/categories/edit}" th:object="${category}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <label>Name:</label>
+    <input type="text" th:field="*{name}" required/><br/>
+    <button type="submit">Save</button>
+    <a th:href="@{/admin/categories}">Cancel</a>
+</form>
+</div>
+</body>
+</html>

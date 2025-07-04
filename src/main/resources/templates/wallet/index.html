@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lịch sử nạp tiền</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+</head>
+<body>
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-primary text-white rounded-top-4 py-4 text-center">
+                    <h2 class="mb-0 fw-bold">Lịch sử nạp tiền ví điện tử</h2>
+                    <p class="mb-0">Xem chi tiết các giao dịch nạp tiền của bạn</p>
+                </div>
+                <div class="card-body bg-light rounded-bottom-4">
+                    <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                        <form th:action="@{/wallet/recharge}" method="post" class="d-flex gap-2 flex-wrap">
+                            <input type="number" name="amount" min="1000" step="1000" class="form-control form-control-lg"
+                                   style="max-width:220px" placeholder="Nhập số tiền nạp" required>
+                            <button type="submit" class="btn btn-success btn-lg fw-bold">
+                                <i class="bi bi-plus-circle"></i> Nạp tiền
+                            </button>
+                        </form>
+                        <div>
+                            <a href="/wallet" class="btn btn-outline-primary me-2">
+                                <i class="bi bi-arrow-clockwise"></i> Làm mới
+                            </a>
+                            <a href="/" class="btn btn-outline-secondary">
+                                <i class="bi bi-house"></i> Trang chủ
+                            </a>
+                        </div>
+                    </div>
+                    <div th:if="${success}" class="alert alert-success">[[${success}]]</div>
+                    <div th:if="${error}" class="alert alert-danger">[[${error}]]</div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover align-middle bg-white rounded-3 overflow-hidden">
+                            <thead class="table-primary text-center">
+                            <tr>
+                                <th>Mã giao dịch</th>
+                                <th>Người nạp</th>
+                                <th>Số tiền</th>
+                                <th>Thời gian</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="tx : ${walletTransactions}">
+                                <td th:text="${tx.id}"></td>
+                                <td th:text="${tx.user.username}"></td>
+                                <td class="fw-bold text-success"
+                                    th:text="${#numbers.formatDecimal(tx.amount, 0, 'POINT', 0, 'COMMA')} + ' ₫'"></td>
+                                <td th:text="${#temporals.format(tx.date, 'dd/MM/yyyy HH:mm')}"></td>
+                                <td><span class="badge bg-success">Thành công</span></td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(walletTransactions)}">
+                                <td colspan="5" class="text-center text-muted">Chưa có giao dịch nào.</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
