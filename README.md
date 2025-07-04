@@ -23,7 +23,7 @@ A web application for managing and shopping smartphones, built with Java, Spring
 
 - JDK 17 or newer
 - Maven 3.6+
-- MySQL or another supported database
+- SQL Server database
 
 ### Setup
 
