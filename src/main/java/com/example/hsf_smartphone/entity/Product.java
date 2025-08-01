@@ -32,6 +32,10 @@ public class Product {
 
     private String imageUrl;
 
+    private String manufacturer;
+
+    private String unit;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;

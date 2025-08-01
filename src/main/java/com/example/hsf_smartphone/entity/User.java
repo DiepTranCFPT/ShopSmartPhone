@@ -26,6 +26,10 @@ public class User {
 
     private Double wallet = 0.0;
 
+    private String fullName;
+    private String phone;
+    private String email;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_roles",
